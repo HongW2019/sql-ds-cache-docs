@@ -1,0 +1,18 @@
+site_name: SQL DS Cache
+
+nav:
+- Overview: Architecture-Overview.md
+- User Guide: User-Guide.md
+- OAP Installation Guide: OAP-Installation-Guide.md
+- Advanced Configuration: Advanced-Configuration.md
+- Developer Guide: Developer-Guide.md
+- Version Selector: "../"
+
+edit_uri: ""
+
+theme: readthedocs
+plugins:
+  - search
+  - mkdocs-versioning:
+      version: 0.8.4
+      exclude_from_nav: ["image", "js", "css", "fonts", "img"]
