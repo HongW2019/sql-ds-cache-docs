@@ -189,10 +189,10 @@
 </table>
 <ul>
 <li>
-<p>For cache solution <code>guava/noevict</code>, make sure <a href="https://github.com/memkind/memkind/tree/v1.10.1-rc2">Memkind</a> library installed on every cluster worker node. If you have finished <a href="../../../docs/OAP-Installation-Guide.md">OAP Installation Guide</a>, libmemkind will be installed. Or manually build and install it following <a href="../Developer-Guide/#memkind-installation">memkind-installation</a>, then place <code>libmemkind.so.0</code> under <code>/lib64/</code> on each worker node.</p>
+<p>For cache solution <code>guava/noevict</code>, make sure <a href="https://github.com/memkind/memkind/tree/v1.10.1-rc2">Memkind</a> library installed on every cluster worker node. If you have finished <a href="../../../docs/OAP-Installation-Guide.md">OAP Installation Guide</a>, libmemkind will be installed. Or manually build and install it following <a href="../Developer-Guide/#memkind-installation">memkind installation</a>, then place <code>libmemkind.so.0</code> under <code>/lib64/</code> on each worker node.</p>
 </li>
 <li>
-<p>For cache solution <code>vmemcahe/external</code> cache, make sure <a href="https://github.com/pmem/vmemcache">Vmemcache</a> library has been installed on every cluster worker node. If you have finished <a href="../../../docs/OAP-Installation-Guide.md">OAP Installation Guide</a>, libvmemcache will be installed. Or you can follow the <a href="../Developer-Guide/#vmemcache-installation">vmemcache-installation</a> steps and make sure <code>libvmemcache.so.0</code> exist under <code>/lib64/</code> directory on each worker node.</p>
+<p>For cache solution <code>vmemcahe/external</code> cache, make sure <a href="https://github.com/pmem/vmemcache">Vmemcache</a> library has been installed on every cluster worker node. If you have finished <a href="../../../docs/OAP-Installation-Guide.md">OAP Installation Guide</a>, libvmemcache will be installed. Or you can follow the <a href="../Developer-Guide/#vmemcache-installation">vmemcache installation</a> steps and make sure <code>libvmemcache.so.0</code> exist under <code>/lib64/</code> directory on each worker node.</p>
 </li>
 </ul>
 <p>If you have followed <a href="../../../docs/OAP-Installation-Guide.md">OAP Installation Guide</a>, <strong><em>Memkind</em></strong> ,<strong><em>Vmemcache</em></strong> and <strong><em>Plasma</em></strong> will be automatically installed. 
@@ -263,7 +263,7 @@ spark.executor.sql.oap.cache.persistent.memory.reserved.size   50g
 spark.sql.extensions                                           org.apache.spark.sql.OapExtensions
 # absolute path of the jar on your working node, when in Yarn client mode
 spark.files                       $HOME/miniconda2/envs/oapenv/oap_jars/oap-cache-&lt;version&gt;-with-spark-&lt;version&gt;.jar,$HOME/miniconda2/envs/oapenv/oap_jars/oap-common-&lt;version&gt;-with-spark-&lt;version&gt;.jar
-# relative path to spark.files, just specify jar name in current dir, when in Yarn client mode
+# relative path of the jar, when in Yarn client mode
 spark.executor.extraClassPath     ./oap-cache-&lt;version&gt;-with-spark-&lt;version&gt;.jar:./oap-common-&lt;version&gt;-with-spark-&lt;version&gt;.jar
 # absolute path of the jar on your working node,when in Yarn client mode
 spark.driver.extraClassPath       $HOME/miniconda2/envs/oapenv/oap_jars/oap-cache-&lt;version&gt;-with-spark-&lt;version&gt;.jar:$HOME/miniconda2/envs/oapenv/oap_jars/oap-common-&lt;version&gt;-with-spark-&lt;version&gt;.jar
@@ -291,7 +291,7 @@ spark.sql.extensions              org.apache.spark.sql.OapExtensions
 
 # absolute path of the jar on your working node, when in Yarn client mode
 spark.files                       $HOME/miniconda2/envs/oapenv/oap_jars/oap-cache-&lt;version&gt;-with-spark-&lt;version&gt;.jar,$HOME/miniconda2/envs/oapenv/oap_jars/oap-common-&lt;version&gt;-with-spark-&lt;version&gt;.jar
-# relative path to spark.files, just specify jar name in current dir, when in Yarn client mode
+# relative path of the jar, when in Yarn client mode
 spark.executor.extraClassPath     ./oap-cache-&lt;version&gt;-with-spark-&lt;version&gt;.jar:./oap-common-&lt;version&gt;-with-spark-&lt;version&gt;.jar
 # absolute path of the jar on your working node,when in Yarn client mode
 spark.driver.extraClassPath       $HOME/miniconda2/envs/oapenv/oap_jars/oap-cache-&lt;version&gt;-with-spark-&lt;version&gt;.jar:$HOME/miniconda2/envs/oapenv/oap_jars/oap-common-&lt;version&gt;-with-spark-&lt;version&gt;.jar
@@ -314,7 +314,7 @@ spark.sql.extensions              org.apache.spark.sql.OapExtensions
 
 # absolute path of the jar on your working node, when in Yarn client mode
 spark.files                       $HOME/miniconda2/envs/oapenv/oap_jars/oap-cache-&lt;version&gt;-with-spark-&lt;version&gt;.jar,$HOME/miniconda2/envs/oapenv/oap_jars/oap-common-&lt;version&gt;-with-spark-&lt;version&gt;.jar
-# relative path to spark.files, just specify jar name in current dir, when in Yarn client mode
+# relative path of the jar, when in Yarn client mode
 spark.executor.extraClassPath     ./oap-cache-&lt;version&gt;-with-spark-&lt;version&gt;.jar:./oap-common-&lt;version&gt;-with-spark-&lt;version&gt;.jar
 # absolute path of the jar on your working node,when in Yarn client mode
 spark.driver.extraClassPath       $HOME/miniconda2/envs/oapenv/oap_jars/oap-cache-&lt;version&gt;-with-spark-&lt;version&gt;.jar:$HOME/miniconda2/envs/oapenv/oap_jars/oap-common-&lt;version&gt;-with-spark-&lt;version&gt;.jar

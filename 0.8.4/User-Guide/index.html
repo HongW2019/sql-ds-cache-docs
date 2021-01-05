@@ -183,7 +183,7 @@
 <li><a href="#Advanced-Configuration">Advanced Configuration</a></li>
 </ul>
 <h2 id="prerequisites">Prerequisites</h2>
-<p>SQL Index and Data Source Cache on Spark 3.0.0 requires a working Hadoop cluster with YARN and Spark. Running Spark on YARN requires a binary distribution of Spark, which is built with YARN support.</p>
+<p>SQL Index and Data Source Cache on Spark 2.4.4 requires a working Hadoop cluster with YARN and Spark. Running Spark on YARN requires a binary distribution of Spark, which is built with YARN support.</p>
 <h2 id="getting-started">Getting Started</h2>
 <h3 id="building">Building</h3>
 <p>We have provided a Conda package which will automatically install dependencies and build OAP jars, please follow <a href="../../../docs/OAP-Installation-Guide.md">OAP-Installation-Guide</a> and you can find compiled OAP jars under
@@ -197,7 +197,7 @@
 spark.files                       $HOME/miniconda2/envs/oapenv/oap_jars/oap-cache-&lt;version&gt;-with-spark-&lt;version&gt;.jar,$HOME/miniconda2/envs/oapenv/oap_jars/oap-common-&lt;version&gt;-with-spark-&lt;version&gt;.jar
 # relative path to spark.files, just specify jar name in current dir
 spark.executor.extraClassPath     ./oap-cache-&lt;version&gt;-with-spark-&lt;version&gt;.jar:./oap-common-&lt;version&gt;-with-spark-&lt;version&gt;.jar
-# absolute path of the jar on your working node
+# absolute path of the jar on your working node, when in Yarn client mode
 spark.driver.extraClassPath       $HOME/miniconda2/envs/oapenv/oap_jars/oap-cache-&lt;version&gt;-with-spark-&lt;version&gt;.jar:$HOME/miniconda2/envs/oapenv/oap_jars/oap-common-&lt;version&gt;-with-spark-&lt;version&gt;.jar
 </code></pre>
 <h3 id="verify-integration">Verify Integration</h3>
@@ -225,22 +225,22 @@ spark.sql("show oindex from oap_test").show()
 </li>
 </ol>
 <p>This test creates an index for a table and then shows it. If there are no errors, the OAP <code>.jar</code> is working with the configuration. The picture below is an example of a successfully run.</p>
-<p><img alt="Spark_shell_running_results" src="../image/spark_shell_oap.png" /></p>
+<p><img alt="Spark_shell_running_results" src="./image/spark_shell_oap.png" /></p>
 <h2 id="configuration-for-yarn-cluster-mode">Configuration for YARN Cluster Mode</h2>
 <p>Spark Shell, Spark SQL CLI and Thrift Sever run Spark application in <strong><em>client</em></strong> mode. While Spark Submit tool can run Spark application in <strong><em>client</em></strong> or <strong><em>cluster</em></strong> mode, which is decided by <code>--deploy-mode</code> parameter. <a href="#Getting-Started">Getting Started</a> session has shown the configurations needed for <strong><em>client</em></strong> mode. If you are running Spark Submit tool in <strong><em>cluster</em></strong> mode, you need to follow the below configuration steps instead.</p>
 <p>Add the following OAP configuration settings to <code>$SPARK_HOME/conf/spark-defaults.conf</code> on your working node before running <code>spark-submit</code> in <strong><em>cluster</em></strong> mode.</p>
 <pre><code>spark.sql.extensions              org.apache.spark.sql.OapExtensions
 # absolute path on your working node
 spark.files                       $HOME/miniconda2/envs/oapenv/oap_jars/oap-cache-&lt;version&gt;-with-spark-&lt;version&gt;.jar,$HOME/miniconda2/envs/oapenv/oap_jars/oap-common-&lt;version&gt;-with-spark-&lt;version&gt;.jar
-# relative path to spark.files, just specify jar name in current dir   
-spark.executor.extraClassPath     ./oap-cache-&lt;version&gt;-with-spark-&lt;version&gt;.jar:./oap-common-&lt;version&gt;-with-spark-&lt;version&gt;.jar
 # relative path to spark.files, just specify jar name in current dir
+spark.executor.extraClassPath     ./oap-cache-&lt;version&gt;-with-spark-&lt;version&gt;.jar:./oap-common-&lt;version&gt;-with-spark-&lt;version&gt;.jar
+# relative path to spark.files, just specify jar name in current dir, when in Yarn cluster mode  
 spark.driver.extraClassPath       ./oap-cache-&lt;version&gt;-with-spark-&lt;version&gt;.jar:./oap-common-&lt;version&gt;-with-spark-&lt;version&gt;.jar
 </code></pre>
 <h2 id="configuration-for-spark-standalone-mode">Configuration for Spark Standalone Mode</h2>
 <p>In addition to running on the YARN cluster manager, Spark also provides a simple standalone deploy mode. If you are using Spark in Spark Standalone mode:</p>
 <ol>
-<li>Make sure the OAP <code>.jar</code> at the same path of <strong>all</strong> the worker nodes.</li>
+<li>Make sure the OAP <code>.jar</code> at the same path of <strong>all</strong> the worker nodes. </li>
 <li>Add the following configuration settings to <code>$SPARK_HOME/conf/spark-defaults.conf</code> on the working node.</li>
 </ol>
 <pre><code>spark.sql.extensions               org.apache.spark.sql.OapExtensions
@@ -326,7 +326,7 @@ SELECT * FROM oap_test WHERE a = 3;
 <ol>
 <li>Open the Spark History Web UI and go to the OAP tab page to verify the cache metrics. The following picture is an example.</li>
 </ol>
-<p><img alt="webUI" src="../image/webUI.png" /></p>
+<p><img alt="webUI" src="./image/webUI.png" /></p>
 <h3 id="use-pmem-cache">Use PMem Cache</h3>
 <h4 id="prerequisites_1">Prerequisites</h4>
 <p>The following steps are required to configure OAP to use PMem cache with <code>external</code> cache strategy.</p>
@@ -368,7 +368,7 @@ Socket Configuration -&gt; Intel UPI General Configuration -&gt; Stale AtoS :  D
 <p>For more information you can refer to <a href="https://software.intel.com/content/www/us/en/develop/articles/quick-start-guide-configure-intel-optane-dc-persistent-memory-on-linux.html">Quick Start Guide: Provision Intel® Optane™ DC Persistent Memory</a></p>
 <ul>
 <li>
-<p>SQL Data Source Cache uses Plasma as a node-level external cache service, the benefit of using external cache is data could be shared across process boundaries.  <a href="http://arrow.apache.org/blog/2017/08/08/plasma-in-memory-object-store/">Plasma</a> is a high-performance shared-memory object store and a component of <a href="https://github.com/apache/arrow">Apache Arrow</a>. We have modified Plasma to support PMem, and make it open source on <a href="https://github.com/Intel-bigdata/arrow/tree/branch-0.17.0-oap-1.0">Intel-bigdata Arrow</a> repo. If you have finished <a href="../../../docs/OAP-Installation-Guide.md">OAP Installation Guide</a>, Plasma will be automatically installed and then you just need copy <code>arrow-plasma-0.17.0.jar</code> to <code>$SPARK_HOME/jars</code>. For manual building and installation steps you can refer to <a href="../Developer-Guide/#Plasma-installation">Plasma installation</a>.</p>
+<p>SQL Data Source Cache uses Plasma as a node-level external cache service, the benefit of using external cache is data could be shared across process boundaries.  <a href="http://arrow.apache.org/blog/2017/08/08/plasma-in-memory-object-store/">Plasma</a> is a high-performance shared-memory object store and a component of <a href="https://github.com/apache/arrow">Apache Arrow</a>. We have modified Plasma to support PMem, and make it open source on <a href="https://github.com/Intel-bigdata/arrow/tree/branch-0.17.0-oap-0.8">Intel-bigdata Arrow</a> repo. If you have finished <a href="../../../docs/OAP-Installation-Guide.md">OAP Installation Guide</a>, Plasma will be automatically installed and then you just need copy <code>arrow-plasma-0.17.0.jar</code> to <code>$SPARK_HOME/jars</code>. For manual building and installation steps you can refer to <a href="../Developer-Guide/#Plasma-installation">Plasma installation</a>.</p>
 </li>
 <li>
 <p>Refer to configuration below to apply external cache strategy and start Plasma service on each node and start your workload.</p>
@@ -410,7 +410,7 @@ spark.executor.sql.oap.cache.external.client.pool.size       10
 <code>-m  how much Bytes share memory Plasma will use
  -s  Unix Domain sockcet path
  -d  PMem directory</code></p>
-<p>Start Plasma service on each node with following command, then run your workload. If you install OAP by Conda, you can find <code>plasma-store-server</code> in the path <strong>$HOME/miniconda2/envs/oapenv/bin/</strong>.</p>
+<p>Start Plasma service on each node with following command, then run your workload. If you install OAP by Conda, you can find <code>plasma-store-server</code> under  <strong>$HOME/miniconda2/envs/oapenv/bin/</strong>.</p>
 <pre><code>./plasma-store-server -m 15000000000 -s /tmp/plasmaStore -d /mnt/pmem  
 </code></pre>
 <p>Remember to kill <code>plasma-store-server</code> process if you no longer need cache, and you should delete <code>/tmp/plasmaStore</code> which is a Unix domain socket.  </p>
@@ -449,14 +449,14 @@ Run <code>yarn app -destroy plasma-store-service</code>to destroy it.</p>
 </ul>
 <h2 id="run-tpc-ds-benchmark">Run TPC-DS Benchmark</h2>
 <p>This section provides instructions and tools for running TPC-DS queries to evaluate the cache performance of various configurations. The TPC-DS suite has many queries and we select 9 I/O intensive queries to simplify performance evaluation.</p>
-<p>We created some tool scripts <a href="https://github.com/Intel-bigdata/OAP/releases/download/v0.9.0-spark-3.0.0/oap-benchmark-tool.zip">oap-benchmark-tool.zip</a> to simplify running the workload. If you are already familiar with TPC-DS data generation and running a TPC-DS tool suite, skip our tool and use the TPC-DS tool suite directly.</p>
+<p>We provides some tool scripts <a href="https://github.com/Intel-bigdata/OAP/releases/download/v0.8.4-spark-2.4.4/oap-benchmark-tool.zip">oap-benchmark-tool.zip</a> to simplify running the workload. If you are already familiar with TPC-DS data generation and running a TPC-DS tool suite, skip our tool and use the TPC-DS tool suite directly.</p>
 <h3 id="prerequisites_2">Prerequisites</h3>
 <ul>
 <li>Python 2.7+ is required on the working node. </li>
 </ul>
 <h3 id="prepare-the-tool">Prepare the Tool</h3>
 <ol>
-<li>Download <a href="https://github.com/Intel-bigdata/OAP/releases/download/v0.9.0-spark-3.0.0/oap-benchmark-tool.zip">oap-benchmark-tool.zip</a> and unzip to a folder (for example, <code>oap-benchmark-tool</code> folder) on your working node. </li>
+<li>Download <a href="https://github.com/Intel-bigdata/OAP/releases/download/v0.8.4-spark-2.4.4/oap-benchmark-tool.zip">oap-benchmark-tool.zip</a> and unzip to a folder (for example, <code>oap-benchmark-tool</code> folder) on your working node. </li>
 <li>Copy <code>oap-benchmark-tool/tools/tpcds-kits</code> to <strong><em>ALL</em></strong> worker nodes under the same folder (for example, <code>/home/oap/tpcds-kits</code>).</li>
 </ol>
 <h3 id="generate-tpc-ds-data">Generate TPC-DS Data</h3>
@@ -474,7 +474,7 @@ Run <code>yarn app -destroy plasma-store-service</code>to destroy it.</p>
 <li>DATA_FORMAT: The data file format. You can specify parquet or orc</li>
 </ol>
 <p>For example:</p>
-<pre><code>export SPARK_HOME=/home/oap/spark-3.0.0
+<pre><code>export SPARK_HOME=/home/oap/spark-2.4.4
 export TPCDS_KITS_DIR=/home/oap/tpcds-kits
 export NAMENODE_ADDRESS=mynamenode:9000
 export THRIFT_SERVER_ADDRESS=mythriftserver
@@ -488,7 +488,7 @@ export DATA_FORMAT=parquet
 <pre><code>cd oap-benchmark-tool
 sh ./scripts/run_gen_data.sh
 </code></pre>
-<p>Once finished, the <code>$scale</code> data will be generated in the HDFS folder <code>genData$scale</code>. And a database called <code>tpcds_$format$scale</code> will contain the TPC-DS tables.</p>
+<p>Once finished, the <code>$scale</code> data will be generated in the HDFS folder <code>$format/genData$scale</code>. And a database called <code>tpcds_$format$scale</code> will contain the TPC-DS tables.</p>
 <h3 id="start-spark-thrift-server">Start Spark Thrift Server</h3>
 <p>Start the Thrift Server in the tool root folder, which is the same folder you run data generation scripts. Use either the PMem or DRAM script to start the Thrift Server.</p>
 <h4 id="use-pmem-as-cache-media">Use PMem as Cache Media</h4>
@@ -539,7 +539,7 @@ And the Spark webUI OAP tab has more specific OAP cache metrics just as <a href=
 - <a href="../Advanced-Configuration/#Cache-Hot-Tables">Cache Hot Tables</a> </p>
 <p>Data Source Cache also supports caching specific tables according to actual situations, these tables are usually hot tables.
 - <a href="../Advanced-Configuration/#Column-Vector-Cache">Column Vector Cache</a> </p>
-<p>This document above uses <strong>binary</strong> cache as example for Parquet file format, if your cluster memory resources is abundant enough, you can choose ColumnVector data cache instead of binary cache for Parquet to spare computation time.
+<p>This document above uses <strong>binary</strong> cache as example, if your cluster memory resources is abundant enough, you can choose ColumnVector data cache instead of binary cache to spare computation time.
 - <a href="../Advanced-Configuration/#Large-Scale-and-Heterogeneous-Cluster-Support">Large Scale and Heterogeneous Cluster Support</a> </p>
 <p>Introduce an external database to store cache locality info to support large-scale and heterogeneous clusters.</p>
 <p>For more information and configuration details, please refer to <a href="../Advanced-Configuration/">Advanced Configuration</a>.</p>

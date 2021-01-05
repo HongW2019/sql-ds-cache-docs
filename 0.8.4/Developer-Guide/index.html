@@ -138,7 +138,7 @@
             <div class="section">
               
                 <h1 id="developer-guide">Developer Guide</h1>
-<p>This document is a supplement to the whole <a href="../../../docs/Developer-Guide.md">Developer Guide</a> for SQL Index and Data Source Cache.
+<p>This document is a supplement to the whole <a href="../../../docs/Developer-Guide.md">Developer Guide</a> for SQL Index and Data Source Cache. 
 After following that document, you can continue more details for SQL Index and Data Source Cache.</p>
 <ul>
 <li><a href="#Building">Building</a></li>
@@ -201,7 +201,7 @@ sudo rpm -i libvmemcache*.rpm
 </ul>
 <pre><code>cd /tmp
 git clone https://github.com/Intel-bigdata/arrow.git
-cd arrow &amp;&amp; git checkout branch-0.17.0-oap-1.0
+cd arrow &amp;&amp; git checkout branch-0.17.0-oap-0.8
 cd cpp
 mkdir release
 cd release
@@ -230,16 +230,16 @@ mvn clean -q -pl plasma -DskipTests install
 </code></pre>
 <h2 id="enabling-numa-binding-for-pmem-in-spark">Enabling NUMA binding for PMem in Spark</h2>
 <h3 id="rebuilding-spark-packages-with-numa-binding-patch">Rebuilding Spark packages with NUMA binding patch</h3>
-<p>When using PMem as a cache medium apply the <a href="https://www.kernel.org/doc/html/v4.18/vm/numa.html">NUMA</a> binding patch <a href="../numa-binding-spark-3.0.0.patch">numa-binding-spark-3.0.0.patch</a> to Spark source code for best performance.</p>
+<p>When using PMem as a cache medium apply the <a href="https://www.kernel.org/doc/html/v4.18/vm/numa.html">NUMA</a> binding patch <a href="../numa-binding-spark-2.4.4.patch">numa-binding-spark-2.4.4.patch</a> to Spark source code for best performance.</p>
 <ol>
 <li>
-<p>Download src for <a href="https://archive.apache.org/dist/spark/spark-3.0.0/spark-3.0.0.tgz">Spark-3.0.0</a> and clone the src from github.</p>
+<p>Download src for <a href="https://archive.apache.org/dist/spark/spark-2.4.4/spark-2.4.4.tgz">Spark-2.4.4</a> and clone the src from github.</p>
 </li>
 <li>
 <p>Apply this patch and <a href="https://spark.apache.org/docs/latest/building-spark.html">rebuild</a> the Spark package.</p>
 </li>
 </ol>
-<pre><code>git apply  numa-binding-spark-3.0.0.patch
+<pre><code>git apply  numa-binding-spark-2.4.4.patch
 </code></pre>
 <ol>
 <li>Add these configuration items to the Spark configuration file $SPARK_HOME/conf/spark-defaults.conf to enable NUMA binding.</li>

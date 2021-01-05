@@ -113,7 +113,7 @@
 <h2 id="introduction">Introduction</h2>
 <p>Apache Spark<em> is a unified analytics engine for large-scale data processing, and Spark SQL</em> is a Spark module widely used to process structured data in data center. However, Spark SQL still faces the challenge of stability and performance in a highly dynamic environment with ultra-large-scale data.</p>
 <p>SQL Index and Data Source Cache are designed to leverage users' defined indices and smart fine-grained in-memory data caching to boost Spark SQL performance, and can address the performance issues of some use cases.</p>
-<p><img alt="OAP-INTRODUCTION" src="../image/OAP-Introduction.PNG" /></p>
+<p><img alt="OAP-INTRODUCTION" src="./image/OAP-Introduction.PNG" /></p>
 <h2 id="usage-scenarios">Usage Scenarios</h2>
 <h3 id="usage-scenario-1-interactive-queries">Usage Scenario 1 -- Interactive queries</h3>
 <p>Most customers adopt Spark SQL as a batch processing engine. Unfortunately, customers would find it hard to separate batch processing and interactive use cases. Interactive queries need to return the data in seconds or even sub-seconds instead of the minutes or hours of batch processing. This is a big challenge for the current Spark SQL implementation.</p>
@@ -134,7 +134,7 @@
 <p>Users can choose either strategy based on their need.</p>
 <h2 id="architecture">Architecture</h2>
 <p>The following diagram shows the design architecture.</p>
-<p><img alt="ARCHITECTURE" src="../image/OAP-Architecture.PNG" /></p>
+<p><img alt="ARCHITECTURE" src="./image/OAP-Architecture.PNG" /></p>
 <p>SQL Index and Data Source Cache acts as a <code>.jar</code> plug-in for Spark SQL.</p>
 <ul>
 <li>
@@ -181,7 +181,6 @@
 <li>Cache Eviction. Data Source Cache cache eviction uses LRU policy, and automatically caches and evicts data transparently to end user.</li>
 <li>Cache configured tables. Data Source Cache also supports caching specific tables by configuring items according to actual situations, these tables are usually hot tables.</li>
 </ul>
-<h6 id="other-names-and-brands-may-be-claimed-as-the-property-of-others">*Other names and brands may be claimed as the property of others.</h6>
               
             </div>
           </div>
